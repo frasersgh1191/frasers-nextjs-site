@@ -2,20 +2,27 @@ import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 
 export default NextAuth({
-    // Configure one or more authentication providers
-    providers: [
-        Providers.GitHub({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
-        }),
-        Providers.Email({
-            server: process.env.EMAIL_SERVER,
-            from: process.env.EMAIL_FROM
-        }),
-        // ...add more providers here
-    ],
+  // Configure one or more authentication providers
+  providers: [
+    Providers.GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+    Providers.Email({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
+    // ...add more providers here
+  ],
 
-    // A database is optional, but required to persist accounts in a database
-    database: null,
-    secret: process.env.NEXTAUTH_SECRET
+  // A database is optional, but required to persist accounts in a database
+  database: process.env.DATABASE_URL,
+  secret: process.env.NEXTAUTH_SECRET,
 })

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import React, { useState, useRef } from 'react'
 // import Image from 'next/image'
+import { useSession } from 'next-auth/client'
 import Burger from './burger'
 import BurgerMenu from './burger-menu'
 import { useOnClickOutside } from '../hooks/hooks'
 import NavList from './nav-list'
-import { useSession } from 'next-auth/client'
 
 export default function NavBar({ children, open, setOpen }) {
   const node = useRef()
@@ -31,11 +31,8 @@ export default function NavBar({ children, open, setOpen }) {
           <Link href="/">
             <a className="title">FRASERS</a>
           </Link>
-
           <NavList showOnLarge />
-          {/* <div>
-          {session && `Hello ${session.name}`}
-          </div> */}
+          <div>{session && `${session.user.name}`}</div>
         </nav>
       </div>
       {children}
