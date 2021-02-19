@@ -5,10 +5,12 @@ import Burger from './burger'
 import BurgerMenu from './burger-menu'
 import { useOnClickOutside } from '../hooks/hooks'
 import NavList from './nav-list'
+import { useSession } from 'next-auth/client'
 
 export default function NavBar({ children, open, setOpen }) {
   const node = useRef()
   useOnClickOutside(node, () => setOpen(false))
+  const [session, loading] = useSession()
 
   return (
     <>
@@ -31,6 +33,9 @@ export default function NavBar({ children, open, setOpen }) {
           </Link>
 
           <NavList showOnLarge />
+          {/* <div>
+          {session && `Hello ${session.name}`}
+          </div> */}
         </nav>
       </div>
       {children}
